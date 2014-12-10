@@ -1,4 +1,4 @@
-using System;
+ï»¿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -6,29 +6,26 @@ using System.Web.Services;
 using System.Net;
 using System.Xml;
 using System.Xml.Linq;
-using HtmlAgilityPack;
 using System.Text;
 using MySql.Data.MySqlClient;
 using System.Data;
 using System.Text.RegularExpressions;
-using System.Timers;
+using HtmlAgilityPack;
 
-/// <summary>
-/// Summary description for milyoncu_web_servis
-/// </summary>
-[WebService(Namespace = "http://tempuri.org/")]
-[WebServiceBinding(ConformsTo = WsiProfiles.BasicProfile1_1)]
-// To allow this Web Service to be called from script, using ASP.NET AJAX, uncomment the following line. 
-// [System.Web.Script.Services.ScriptService]
-public class milyoncu_web_servis : System.Web.Services.WebService {
-
-    IM_MySQLIslemleri my_sql_islemleri = new IM_MySQLIslemleri();
-
-    public milyoncu_web_servis()
+namespace MilyoncuWebServis
+{
+    /// <summary>
+    /// Summary description for Service1
+    /// </summary>
+    [WebService(Namespace = "http://tempuri.org/")]
+    [WebServiceBinding(ConformsTo = WsiProfiles.BasicProfile1_1)]
+    [System.ComponentModel.ToolboxItem(false)]
+    // To allow this Web Service to be called from script, using ASP.NET AJAX, uncomment the following line. 
+    // [System.Web.Script.Services.ScriptService]
+    public class Service1 : System.Web.Services.WebService
     {
-        //Uncomment the following line if using designed components 
-        //InitializeComponent(); 
-    }
+
+    MySQLIslemleri my_sql_islemleri = new MySQLIslemleri();
 
     [WebMethod]
     public void VeritabaninaYaz()
@@ -83,6 +80,7 @@ public class milyoncu_web_servis : System.Web.Services.WebService {
     }
 
 
+
     public string SitedenStringGetir(string str_url)
     {
         WebClient client = new WebClient();
@@ -99,7 +97,7 @@ public class milyoncu_web_servis : System.Web.Services.WebService {
     {
         string html = SitedenStringGetir(str_url);
 
-        HtmlAgilityPack.HtmlDocument dokuman = new HtmlAgilityPack.HtmlDocument();
+        HtmlDocument dokuman = new HtmlDocument();
 
         dokuman.LoadHtml(html);
 
@@ -121,7 +119,7 @@ public class milyoncu_web_servis : System.Web.Services.WebService {
                 i_sayac = (i * 3) + 1;
 
                 /**
-                 * Herbir satýrda bulunan 1. eleman 
+                 * Herbir satÄ±rda bulunan 1. eleman 
                  */
                 str_link = "http://www.hizlial.com" + satirlar[0].ChildNodes[i_sayac].ChildNodes[1].ChildNodes[3].ChildNodes[1].Attributes["href"].Value;
                 str_dosya_yolu = satirlar[0].ChildNodes[i_sayac].ChildNodes[1].ChildNodes[3].ChildNodes[1].ChildNodes[1].Attributes["src"].Value;
@@ -140,7 +138,7 @@ public class milyoncu_web_servis : System.Web.Services.WebService {
                 VeriTabaninaElemanEkle(d_fiyat, str_urun_adi, str_dosya_yolu, str_link, str_ilan_tarihi);
 
                 /**
-                 * Herbir satýrda bulunan 2. eleman 
+                 * Herbir satÄ±rda bulunan 2. eleman 
                  */
                 str_link = "http://www.hizlial.com" + satirlar[0].ChildNodes[i_sayac].ChildNodes[3].ChildNodes[3].ChildNodes[1].Attributes["href"].Value;
                 str_dosya_yolu = satirlar[0].ChildNodes[i_sayac].ChildNodes[3].ChildNodes[3].ChildNodes[1].ChildNodes[1].Attributes["src"].Value;
@@ -160,7 +158,7 @@ public class milyoncu_web_servis : System.Web.Services.WebService {
 
 
                 /**
-                 * Herbir satýrda bulunan 3. eleman 
+                 * Herbir satÄ±rda bulunan 3. eleman 
                  */
                 str_link = "http://www.hizlial.com" + satirlar[0].ChildNodes[i_sayac].ChildNodes[5].ChildNodes[3].ChildNodes[1].Attributes["href"].Value;
                 str_dosya_yolu = satirlar[0].ChildNodes[i_sayac].ChildNodes[5].ChildNodes[3].ChildNodes[1].ChildNodes[1].Attributes["src"].Value;
@@ -192,7 +190,7 @@ public class milyoncu_web_servis : System.Web.Services.WebService {
     {
         string html = SitedenStringGetir(str_url);
 
-        HtmlAgilityPack.HtmlDocument dokuman = new HtmlAgilityPack.HtmlDocument();
+        HtmlDocument dokuman = new HtmlDocument();
 
         dokuman.LoadHtml(html);
 
@@ -214,16 +212,16 @@ public class milyoncu_web_servis : System.Web.Services.WebService {
             //link
             str_link = "www.sahibinden.com" + linkler[i].ChildNodes[1].Attributes["href"].Value;
 
-            //fotoðraf yolu
+            //fotoÄŸraf yolu
             str_dosya_yolu = linkler[i].ChildNodes[1].ChildNodes[1].Attributes["src"].Value;
 
-            //ürün adý
+            //Ã¼rÃ¼n adÄ±
             str_urun_adi = urun_adi[i].ChildNodes[1].InnerText;
             str_urun_adi = str_urun_adi.Replace("&#039;", "'");
             str_urun_adi = str_urun_adi.Replace("&quot;", "\"");
             str_urun_adi = str_urun_adi.Replace("'", "");
 
-            //ürün fiyatý
+            //Ã¼rÃ¼n fiyatÄ±
             str_urun_fiyati = urun_fiyati[i].InnerText;
 
             //ilan tarihi
@@ -290,6 +288,5 @@ public class milyoncu_web_servis : System.Web.Services.WebService {
         }
 
     }
-
-    
+    }
 }
