@@ -243,13 +243,9 @@ public class milyoncu_web_servis : System.Web.Services.WebService {
 
 
 
-    bool b_yirmiden_kucuk;
-    string str_tablo_ismi = "";
-    string str_sorgu = "";
-
-    public void VeriTabaninaElemanEkle(double d_fiyat, string str_urun_adi, string str_dosya_yolu, string str_link, string str_ilan_tarihi)
+    public string TabloIsmiBelirle(double d_fiyat)
     {
-        b_yirmiden_kucuk = true;
+        string str_tablo_ismi = "";
 
         if (d_fiyat <= 1.0)
         {
@@ -269,12 +265,27 @@ public class milyoncu_web_servis : System.Web.Services.WebService {
         }
         else
         {
+            str_tablo_ismi = "yok";
+        }
+
+        return str_tablo_ismi;
+    }
+
+
+    public void VeriTabaninaElemanEkle(double d_fiyat, string str_urun_adi, string str_dosya_yolu, string str_link, string str_ilan_tarihi)
+    {
+        bool b_yirmiden_kucuk = true;
+
+        string str_tablo_ismi = TabloIsmiBelirle(d_fiyat);
+
+        if(str_tablo_ismi=="yok")
+        {
             b_yirmiden_kucuk = false;
         }
 
         if (b_yirmiden_kucuk)
         {
-            str_sorgu = "INSERT INTO " + str_tablo_ismi + " (urun_adi, urun_fiyati, dosya_yolu, link, tarih) VALUES ('" + str_urun_adi + "'," + d_fiyat.ToString().Replace(",", ".") + ",'" + str_dosya_yolu + "','" + str_link + "','" + str_ilan_tarihi + "')";
+            string str_sorgu = "INSERT INTO " + str_tablo_ismi + " (urun_adi, urun_fiyati, dosya_yolu, link, tarih) VALUES ('" + str_urun_adi + "'," + d_fiyat.ToString().Replace(",", ".") + ",'" + str_dosya_yolu + "','" + str_link + "','" + str_ilan_tarihi + "')";
             my_sql_islemleri.IM_MySSQLSorguCalistir(str_sorgu);
         }
 
