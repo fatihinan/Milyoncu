@@ -38,7 +38,7 @@ namespace MilyoncuWebServis
         }
 
 
-        public void IM_MySSQLSorguCalistir(string str_komut)
+        public void IM_MySQLSorguCalistir(string str_komut)
         {
             MySqlCommand komut = new MySqlCommand(str_komut, baglanti);
 
