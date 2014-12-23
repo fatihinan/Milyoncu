@@ -2,8 +2,12 @@ package com.example.cilginmilyoncu;
 
 import java.util.List;
 
-import android.app.Activity;
+import com.nostra13.universalimageloader.core.DisplayImageOptions;
+import com.nostra13.universalimageloader.core.ImageLoader;
+
 import android.content.Context;
+import android.content.Intent;
+import android.net.Uri;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,9 +21,9 @@ public class SatirAdapter extends BaseAdapter {
 	private LayoutInflater myInflater;
 	private List<Urun> myList;
 	
-	public SatirAdapter(Activity activity,List<Urun> urunler)
+	public SatirAdapter(Context icerik,List<Urun> urunler)
 	{
-		myInflater = (LayoutInflater) activity.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+		myInflater = (LayoutInflater) icerik.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 		myList=urunler;
 	}
 	@Override
@@ -47,19 +51,47 @@ public class SatirAdapter extends BaseAdapter {
 		satirView = myInflater.inflate(R.layout.satir, null);
         TextView txtAd =(TextView) satirView.findViewById(R.id.urunAdi); 
         TextView txtFiyat =(TextView) satirView.findViewById(R.id.urunFiyati); 
-        TextView txtSite =(TextView) satirView.findViewById(R.id.siteAdi); 
         ImageView imageView =(ImageView) satirView.findViewById(R.id.resim);
-        Button btn=(Button)satirView.findViewById(R.id.siteyeGit);
- 
-        Urun _urun=myList.get(position);
- 
+        Button btn = (Button)satirView.findViewById(R.id.siteyeGit);
+        
+        final Urun _urun=myList.get(position);
+        
+        btn.setOnClickListener(new View.OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				// TODO Auto-generated method stub
+				Yonlendir(_urun.getSite());
+			}
+		});
+
         txtAd.setText(_urun.getAd());
-        txtFiyat.setText(_urun.fiyat());
-        txtSite.setText(_urun.getSite());
+        txtFiyat.setText(_urun.getFiyat() + " TL");
        
         imageView.setImageResource(R.drawable.simge1);
+        
+        String url = _urun.getDosyaYolu();
+
+        ImageLoader imageLoader = ImageLoader.getInstance();
+        DisplayImageOptions options = new DisplayImageOptions.Builder().cacheInMemory(true).build();
+        		
+        //download and display image from url
+        imageLoader.displayImage(url, imageView, options);
 
         return satirView;
 	}
+	
+	
+	private void Yonlendir(String str_url) 
+	{
+		Intent myWebLink = new Intent(android.content.Intent.ACTION_VIEW);
+		if(!str_url.contains("http"))
+		{
+			str_url = "http://" + str_url;
+		}
+        myWebLink.setData(Uri.parse(str_url));
+        MainActivity.icerik.startActivity(myWebLink);
+            
+    }
 
 }

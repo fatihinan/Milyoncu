@@ -4,27 +4,35 @@ public class Urun {
 	private String urunAdi;
 	private String fiyat;
 	private String siteAdi;
+	private String dosyaYolu;
+	private String tarih;
 	
 	public Urun()
 	{
 		super();
 	}
-	public Urun (String _ad,String _fiyat,String _site)
+	public Urun (String _ad,String _fiyat,String _site, String _dosyaYolu, String _tarih)
 	{
 		super();
 		this.urunAdi=_ad;
 		this.fiyat=_fiyat;
 		this.siteAdi=_site;
+		this.dosyaYolu = _dosyaYolu;
+		this.tarih = _tarih;
 	}
 	public String getAd()
 	{
 		return urunAdi;
 	}
+	public String getDosyaYolu()
+	{
+		return dosyaYolu;
+	}
 	public void setAd(String ad)
 	{
 		this.urunAdi=ad;
 	}
-	public String fiyat()
+	public String getFiyat()
 	{
 		return fiyat;
 	}

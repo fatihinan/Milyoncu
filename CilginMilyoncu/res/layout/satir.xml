@@ -1,16 +1,18 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="fill_parent"
-    android:layout_height="fill_parent" >
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content" >
 
     <ImageView
         android:id="@+id/resim"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_gravity="center"
         android:src="@android:drawable/alert_light_frame" />
 
     <LinearLayout
         android:layout_width="wrap_content"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="5dp"
         android:orientation="vertical" >
 
         <TextView
@@ -21,12 +23,6 @@
 
         <TextView
             android:id="@+id/urunFiyati"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="TextView" />
-
-        <TextView
-            android:id="@+id/siteAdi"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="TextView" />

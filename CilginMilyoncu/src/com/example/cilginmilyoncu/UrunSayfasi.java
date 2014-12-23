@@ -1,11 +1,12 @@
 package com.example.cilginmilyoncu;
 
-import java.util.ArrayList;
-import java.util.List;
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdView;
 
 import android.app.Activity;
 import android.os.Bundle;
 import android.widget.ListView;
+import android.widget.Toast;
 
 public class UrunSayfasi extends Activity{
 	
@@ -16,13 +17,15 @@ public class UrunSayfasi extends Activity{
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.urun_sayfasi);
 		
-		final ListView myList=(ListView)findViewById(R.id.liste2);
-		
-		final List<Urun> urunler=new ArrayList<Urun>();
-		urunler.add(new Urun("Ürün 1","10 TL","www.hizlial.com"));
+		AdView adView = (AdView) this.findViewById(R.id.adView);
+        AdRequest adRequest = new AdRequest.Builder().build();
+        adView.loadAd(adRequest);
         
-        SatirAdapter adapter=new SatirAdapter(this,urunler);
-        myList.setAdapter(adapter);
+		String str_tablo_adi = getIntent().getExtras().getString("tablo_adi");
+		ListView myList=(ListView)findViewById(R.id.liste2);
+
+		WebServis ayarlari_guncelle = new WebServis(str_tablo_adi, myList, getApplicationContext());
+		ayarlari_guncelle.execute();
         
 	}
 }
